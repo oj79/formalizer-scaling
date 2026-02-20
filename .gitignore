@@ -1,0 +1,7 @@
+llm-pddl-gen/
+stratisfied_blocksworld/
+**/.ipynb_checkpoints/
+data/block_configs
+data/num_stacks
+data/create_configs_new.ipynb
+data/create_configs.py
