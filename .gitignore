@@ -6,3 +6,4 @@ data/num_stacks
 data/create_configs_new.ipynb
 data/create_configs.py
 .env
+output/
