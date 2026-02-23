@@ -7,3 +7,5 @@ data/create_configs_new.ipynb
 data/create_configs.py
 .env
 output/
+tmp_solver_gt_check/
+data/create_configs_copy.py
