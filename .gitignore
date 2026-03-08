@@ -18,3 +18,4 @@ cc_data/create_problem_descriptions.py
 cc_data/create_problem_descriptions_copy.py
 cc_data/create_problem_files.py
 cc_data/create_problem_files_copy.py
+cc_data/json
