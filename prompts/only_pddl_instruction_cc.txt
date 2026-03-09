@@ -26,7 +26,7 @@ Notes for generating problem file:
 - All the objects that would be arguments of predicates in init and goal states should be declared in :objects
 
 
-Additional strict constraints for large instances (20-100 rooms):
+Additional strict constraints for all instances (5-100 rooms):
 - Output only one complete problem PDDL wrapped in <problem_file>...</problem_file>. Do not output any domain file.
 - Include every room mentioned in the problem description exactly once in :objects, and do not include undeclared objects.
 - Use only predicates and action-relevant symbols that are valid for the provided domain PDDL.
