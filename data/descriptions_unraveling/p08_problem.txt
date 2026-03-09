@@ -1,0 +1,2 @@
+As initial conditions I have 5 blocks numbered 1 to 5. All the odd numbered blocks are on one stack, with increasing numbering from top to bottom. Same for the even numbered blocks on another stack.
+My goal is to have that block 3 is on top of block 2, block 4 is on top of block 3, block 1 is on the table, block 2 is on the table, and block 5 is on the table.

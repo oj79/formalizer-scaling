@@ -1,0 +1,246 @@
+As initial conditions I have that
+block 6 is clear
+block 8 is clear
+block 9 is clear
+block 11 is clear
+block 12 is clear
+block 14 is clear
+block 18 is clear
+block 21 is clear
+block 24 is clear
+block 36 is clear
+block 38 is clear
+block 39 is clear
+block 42 is clear
+block 43 is clear
+block 44 is clear
+block 47 is clear
+block 50 is clear
+block 53 is clear
+block 55 is clear
+block 57 is clear
+block 62 is clear
+block 63 is clear
+block 64 is clear
+block 66 is clear
+block 67 is clear
+block 70 is clear
+block 72 is clear
+block 73 is clear
+block 74 is clear
+block 75 is clear
+block 78 is clear
+block 80 is clear
+block 82 is clear
+block 84 is clear
+block 85 is clear
+block 89 is clear
+block 90 is clear
+block 91 is clear
+block 92 is clear
+block 96 is clear
+block 97 is clear
+block 98 is clear
+block 100 is clear
+the hand is empty
+block 2 is on top of block 54
+block 3 is on top of block 32
+block 4 is on top of block 41
+block 5 is on top of block 93
+block 6 is on top of block 94
+block 11 is on top of block 17
+block 12 is on top of block 7
+block 13 is on top of block 16
+block 14 is on top of block 35
+block 15 is on top of block 61
+block 17 is on top of block 10
+block 18 is on top of block 77
+block 20 is on top of block 56
+block 21 is on top of block 79
+block 22 is on top of block 1
+block 25 is on top of block 71
+block 26 is on top of block 65
+block 28 is on top of block 68
+block 30 is on top of block 81
+block 31 is on top of block 29
+block 34 is on top of block 5
+block 36 is on top of block 52
+block 37 is on top of block 88
+block 38 is on top of block 95
+block 39 is on top of block 87
+block 40 is on top of block 60
+block 42 is on top of block 48
+block 44 is on top of block 13
+block 45 is on top of block 49
+block 46 is on top of block 23
+block 48 is on top of block 3
+block 53 is on top of block 69
+block 55 is on top of block 4
+block 56 is on top of block 59
+block 57 is on top of block 58
+block 59 is on top of block 46
+block 61 is on top of block 34
+block 63 is on top of block 33
+block 64 is on top of block 76
+block 66 is on top of block 27
+block 67 is on top of block 45
+block 68 is on top of block 86
+block 71 is on top of block 51
+block 72 is on top of block 31
+block 73 is on top of block 20
+block 75 is on top of block 99
+block 78 is on top of block 26
+block 79 is on top of block 19
+block 80 is on top of block 40
+block 83 is on top of block 28
+block 85 is on top of block 25
+block 86 is on top of block 15
+block 87 is on top of block 2
+block 93 is on top of block 30
+block 97 is on top of block 83
+block 98 is on top of block 22
+block 99 is on top of block 37
+block 1 is on the table
+block 7 is on the table
+block 8 is on the table
+block 9 is on the table
+block 10 is on the table
+block 16 is on the table
+block 19 is on the table
+block 23 is on the table
+block 24 is on the table
+block 27 is on the table
+block 29 is on the table
+block 32 is on the table
+block 33 is on the table
+block 35 is on the table
+block 41 is on the table
+block 43 is on the table
+block 47 is on the table
+block 49 is on the table
+block 50 is on the table
+block 51 is on the table
+block 52 is on the table
+block 54 is on the table
+block 58 is on the table
+block 60 is on the table
+block 62 is on the table
+block 65 is on the table
+block 69 is on the table
+block 70 is on the table
+block 74 is on the table
+block 76 is on the table
+block 77 is on the table
+block 81 is on the table
+block 82 is on the table
+block 84 is on the table
+block 88 is on the table
+block 89 is on the table
+block 90 is on the table
+block 91 is on the table
+block 92 is on the table
+block 94 is on the table
+block 95 is on the table
+block 96 is on the table
+block 100 is on the table
+My goal is to have that
+block 2 is on top of block 53
+block 3 is on top of block 22
+block 6 is on top of block 78
+block 7 is on top of block 71
+block 9 is on top of block 14
+block 10 is on top of block 46
+block 11 is on top of block 82
+block 12 is on top of block 69
+block 15 is on top of block 67
+block 17 is on top of block 66
+block 21 is on top of block 94
+block 22 is on top of block 39
+block 26 is on top of block 73
+block 27 is on top of block 35
+block 28 is on top of block 86
+block 29 is on top of block 28
+block 30 is on top of block 32
+block 31 is on top of block 26
+block 32 is on top of block 87
+block 34 is on top of block 98
+block 35 is on top of block 45
+block 36 is on top of block 51
+block 37 is on top of block 72
+block 41 is on top of block 38
+block 42 is on top of block 40
+block 43 is on top of block 68
+block 47 is on top of block 79
+block 48 is on top of block 3
+block 49 is on top of block 12
+block 52 is on top of block 56
+block 53 is on top of block 95
+block 55 is on top of block 42
+block 56 is on top of block 54
+block 57 is on top of block 81
+block 61 is on top of block 34
+block 63 is on top of block 36
+block 66 is on top of block 60
+block 67 is on top of block 27
+block 68 is on top of block 1
+block 71 is on top of block 76
+block 72 is on top of block 41
+block 73 is on top of block 8
+block 74 is on top of block 18
+block 78 is on top of block 50
+block 79 is on top of block 13
+block 80 is on top of block 49
+block 82 is on top of block 93
+block 85 is on top of block 6
+block 86 is on top of block 11
+block 90 is on top of block 89
+block 91 is on top of block 59
+block 94 is on top of block 62
+block 95 is on top of block 48
+block 99 is on top of block 31
+block 1 is on the table
+block 4 is on the table
+block 5 is on the table
+block 8 is on the table
+block 13 is on the table
+block 14 is on the table
+block 16 is on the table
+block 18 is on the table
+block 19 is on the table
+block 20 is on the table
+block 23 is on the table
+block 24 is on the table
+block 25 is on the table
+block 33 is on the table
+block 38 is on the table
+block 39 is on the table
+block 40 is on the table
+block 44 is on the table
+block 45 is on the table
+block 46 is on the table
+block 50 is on the table
+block 51 is on the table
+block 54 is on the table
+block 58 is on the table
+block 59 is on the table
+block 60 is on the table
+block 62 is on the table
+block 64 is on the table
+block 65 is on the table
+block 69 is on the table
+block 70 is on the table
+block 75 is on the table
+block 76 is on the table
+block 77 is on the table
+block 81 is on the table
+block 83 is on the table
+block 84 is on the table
+block 87 is on the table
+block 88 is on the table
+block 89 is on the table
+block 92 is on the table
+block 93 is on the table
+block 96 is on the table
+block 97 is on the table
+block 98 is on the table
+block 100 is on the table

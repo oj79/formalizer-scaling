@@ -19,3 +19,5 @@ cc_data/create_problem_descriptions_copy.py
 cc_data/create_problem_files.py
 cc_data/create_problem_files_copy.py
 cc_data/json
+data/create_configs_unraveling.py
+data/problem_file_line_parse.py
