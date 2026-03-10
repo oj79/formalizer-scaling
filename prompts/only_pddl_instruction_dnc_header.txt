@@ -1,0 +1,28 @@
+PDDL problem file's header parts contain problem name, domain name, and objects in this problem instance.
+Based on the natural language problem description, identify the relevant objects for this problem with their names and types..
+PDDL problem file header has a definitive syntax that must be followed for any problem. An abstract example PDDL problem file header is given below.
+
+<header>
+(define
+	(problem problem_name)
+	(:domain domain_name)
+	(:objects
+		obj1 obj2 - type1
+		obj3, obj4 - type2
+	)
+)
+</header>
+
+Notes for generating problem file header:
+- obj1, obj2, ... are only representative and should be replaced with appropriate objects. There could be any number of objects with their types. 
+- The braces should be balanced for each section of the PDDL program header
+- All the objects should be declared in :objects
+
+
+Additional strict constraints for all instances (5-100 blocks):
+- Output only one complete problem PDDL header wrapped in <header>...</header>. Do not output any domain file.
+- Include every block mentioned in the problem description exactly once in :objects, and do not include undeclared objects.
+- Only write for the header parts.
+- Do not write anything for :init.
+- Do not write anything for :goal.
+- Ensure parentheses are balanced and PDDL syntax is valid.

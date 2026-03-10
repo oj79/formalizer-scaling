@@ -1,0 +1,36 @@
+PDDL problem file fact states contains init state of objects, and goal state of objects.
+Based on the natural language problem description, identify the relevant :init and :goal states for this problem ONE-BY-ONE.
+Represent the initial state with the appropriate predicates and object arguments. Represent the goal state with the appropriate predicates and object arguments.
+PDDL problem file fact state has a definitive syntax that must be followed for any problem. An abstract example PDDL problem file fact state is given below.
+
+<fact>
+(:init (predicate1 obj1 obj3) (predicate2 obj2 obj3))
+</fact>
+for an :init state
+
+OR
+
+<fact>
+(:goal (and (predicate1 obj1 obj4) (predicate2 obj2 obj3)))
+</fact>
+for a :goal state
+
+
+Notes for generating problem file fact state:
+- obj1, obj2, ... are only representative and should be replaced with appropriate objects. There could be any number of objects with their types.
+- init state with predicate1 & predicate2 is only representative and should be replaced with appropriate predicates that define init state.
+- goal state with predicate1 & predicate2 is only representative and should be replaced with appropriate predicates that define goal state.
+- predicates with proper arguments could be combined to combine complex boolean expression to represent init and goal states. 
+- The braces should be balanced for each fact state of the PDDL program.
+- Use predicates with arguments of the right type as declared in domain file.
+
+
+Additional strict constraints for ALL instances (5-100 blocks):
+- Output only one problem PDDL fact state wrapped in <fact>...</fact>. Do not output any domain file.
+- Use only predicates and action-relevant symbols that are valid for the provided domain PDDL.
+- For :init, ensure the one fact is a correct translation of the corresponding fact in the natural language problem description.
+- For :init, write (clear blockX) if and only if blockX is clear. 
+- For :init, write (arm-empty) if and only if the hand is empty.
+- Ensure there are no self-relations such as (on blockX blockX).
+- For :goal, use only declared objects and valid predicates, and avoid contradictory goals.
+- Ensure parentheses are balanced and PDDL syntax is valid.
