@@ -1,0 +1,43 @@
+PDDL problem file contains problem name, domain name, objects in this problem instance, init state of objects, and goal state of objects.
+Based on the natural language problem description, identify the relevant objects for this problem with their names and types.
+In a formal PDDL problem file, initial state have the appropriate predicates and object arguments.
+In a formal PDDL problem file, goal state also have the appropriate predicates and object arguments.
+PDDL problem file has a definitive syntax that must be followed for any problem. An abstract example PDDL problem file is given below.
+
+(define
+	(problem problem_name)
+	(:domain domain_name)
+	(:objects
+		obj1 obj2 - type1
+		obj3, obj4 - type2
+	)
+	(:init (predicate1 obj1 obj3) (predicate2 obj2 obj3))
+	(:goal (and (predicate1 obj1 obj4) (predicate2 obj2 obj3)))
+)
+
+You MUST generate a PYTHON SCRIPT that, upon execution, generates the PDDL problem file that matches the natural language problem description:
+<generator>
+the python script code...
+</generator>
+
+
+Notes for generating the python script:
+- The Python script is ONLY TRANSLATING the natural language problem description to the formal PDDL problem file.
+- The Python script is ABSOLUTELY NOT SOLVING the BlocksWorld problem
+
+
+Additional strict constraints for all instances (5-100 blocks):
+- Output only one complete Python script wrapped in <generator>...</generator>. Do not output any domain file.
+- The script MUST derive init/goal facts algorithmically from compact structure, not hardcoded full fact lists.
+- Disallowed: manually listing full init_state/goal_state facts as constants.
+- Required: at least one loop that constructs predicates (e.g., on/on-table/clear) from computed stacks or parsed patterns.
+- Required: compute object list from inferred block count (do not hardcode all object names manually).
+- The Python script, upon execution, need to produce a complete PDDL problem file that includes every block mentioned in the problem description exactly once in :objects and do not include undeclared objects.
+- The Python script, upon execution, need to produce a complete PDDL problem file that uses only predicates and action-relevant symbols that are valid for the provided domain PDDL.
+- The Python script, upon execution, need to produce a complete PDDL problem file that in :init, ensures each block appears in exactly one support relation: either (on-table blockX) or (on blockX blockY), but not both.
+- The Python script, upon execution, need to produce a complete PDDL problem file that in :init, include (clear blockX) if and only if blockX has no block on top of it.
+- The Python script, upon execution, need to produce a complete PDDL problem file that in :init, include exactly one (arm-empty).
+- The Python script, upon execution, need to produce a complete PDDL problem file that ensures there are no self-relations such as (on blockX blockX).
+- The Python script, upon execution, need to produce a complete PDDL problem file that in :goal, use only declared objects and valid predicates, and avoid contradictory goals.
+- The Python script, upon execution, need to produce a complete PDDL problem file that ensures parentheses are balanced and PDDL syntax is valid.
+
