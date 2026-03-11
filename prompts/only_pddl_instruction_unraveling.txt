@@ -20,6 +20,80 @@ You MUST generate a PYTHON SCRIPT that, upon execution, generates the PDDL probl
 the python script code...
 </generator>
 
+EXAMPLE executable generator style (generalized):
+
+<generator>
+def build_init_from_unraveling_rule(n):
+  blocks = [f"block{i}" for i in range(1, n + 1)]
+
+  # Odd and even stacks are TOP -> BOTTOM with increasing numbering
+  odd_stack = [b for i, b in enumerate(blocks, start=1) if i % 2 == 1]
+  even_stack = [b for i, b in enumerate(blocks, start=1) if i % 2 == 0]
+
+  init_facts = []
+
+  # Convert one stack (top->bottom) to on/on-table/clear facts
+  def emit_stack(stack):
+      if not stack:
+          return
+      for idx, block in enumerate(stack):
+          if idx == len(stack) - 1:
+              init_facts.append(f"(on-table {block})")
+          else:
+              under = stack[idx + 1]
+              init_facts.append(f"(on {block} {under})")
+          if idx == 0:
+              init_facts.append(f"(clear {block})")
+
+  emit_stack(odd_stack)
+  emit_stack(even_stack)
+
+  init_facts.append("(arm-empty)")
+  return blocks, init_facts
+
+
+def build_problem_pddl(problem_name, domain_name, blocks, init_facts, goal_facts):
+  lines = []
+  lines.append(f"(define (problem {problem_name})")
+  lines.append(f"  (:domain {domain_name})")
+  lines.append(f"  (:objects {' '.join(blocks)})")
+  lines.append("  (:init")
+  for fact in init_facts:
+      lines.append(f"    {fact}")
+  lines.append("  )")
+  lines.append("  (:goal (and")
+  for fact in goal_facts:
+      lines.append(f"    {fact}")
+  lines.append("  ))")
+  lines.append(")")
+  return "\n".join(lines) + "\n"
+
+
+def main():
+  # n should be inferred from the given NL problem description in the real task
+  n = 10
+  problem_name = "example_problem"
+  domain_name = "blocksworld"
+
+  blocks, init_facts = build_init_from_unraveling_rule(n)
+
+  # Goal extraction can be abstracted; replace with parsed goal facts from the given NL problem
+  goal_facts = [
+      "(on block1 block5)",
+      "(on block2 block1)",
+      "(on-table block4)"
+  ]
+
+  pddl_text = build_problem_pddl(problem_name, domain_name, blocks, init_facts, goal_facts)
+
+  with open("problem.pddl", "w", encoding="utf-8") as f:
+      f.write(pddl_text)
+
+
+if __name__ == "__main__":
+  main()
+</generator>
+
 
 Notes for generating the python script:
 - The Python script is ONLY TRANSLATING the natural language problem description to the formal PDDL problem file.
