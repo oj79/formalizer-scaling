@@ -25,3 +25,5 @@ data/block_configs_unraveling/
 data/num_stacks_unraveling/
 __pycache__/
 *.pyc
+src/pddl_gen/problem_file_gen_deepseek_chat_v3_0324_openrouter.ipynb
+src/pddl_gen/problem_file_gen_deepseek_r1_0528_openrouter.ipynb
