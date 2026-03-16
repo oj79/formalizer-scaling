@@ -1,4 +1,4 @@
-# formalizer-scaling-main
+# Language Model Planners do not Scale, but do Formalizers?
 
 Codebase for PDDL generation and LLM-as-planner experiments across:
 - Blocksworld standard data (`data/descriptions`, `data/pddl`)
