@@ -35,3 +35,4 @@ src/planner_gen_notebooks/llm_planner_gen_qwen3_32b_kani.ipynb
 cc_data/
 prompts/llm_planner_instruction_cc.txt
 prompts/only_pddl_instruction_cc.txt
+src/length_summary
