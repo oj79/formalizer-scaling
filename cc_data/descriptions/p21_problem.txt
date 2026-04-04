@@ -1,0 +1,16 @@
+You are in room_5.
+room_0 and room_5 are connected.
+room_0 and room_14 are connected.
+room_0 and room_2 are connected.
+room_1 and room_14 are connected.
+room_1 and room_9 are connected.
+room_3 and room_12 are connected.
+room_3 and room_7 are connected.
+room_4 and room_5 are connected.
+room_4 and room_11 are connected.
+room_5 and room_10 are connected.
+room_6 and room_12 are connected.
+room_8 and room_9 are connected.
+room_8 and room_12 are connected.
+room_8 and room_13 are connected.
+There is a coin in room_7.

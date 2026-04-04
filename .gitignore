@@ -6,10 +6,12 @@ data/num_stacks
 data/create_configs_new.ipynb
 data/create_configs.py
 .env
+.DS_Store
 output/
 tmp_solver_gt_check/
 data/create_configs_copy.py
 coin_collector_graph/
+coin_collector_graph2/
 cc_data/create_domain_descriptions.py
 cc_data/create_domain_descriptions_copy.py
 cc_data/create_json.py
@@ -32,7 +34,6 @@ src/planner_gen_notebooks/llm_planner_gen_gemini_cc.ipynb
 src/planner_gen_notebooks/llm_planner_gen_qwen2_5_32b_instruct_kani_cc.ipynb
 src/planner_gen_notebooks/llm_planner_gen_qwen2_5_32b_instruct.ipynb
 src/planner_gen_notebooks/llm_planner_gen_qwen3_32b_kani.ipynb
-cc_data/
 prompts/llm_planner_instruction_cc.txt
 prompts/only_pddl_instruction_cc.txt
 src/length_summary

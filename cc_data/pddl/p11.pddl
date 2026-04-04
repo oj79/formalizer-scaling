@@ -1,0 +1,32 @@
+(define (problem p11)
+  (:domain coin-collector)
+  (:objects
+    room_0 room_1 room_2 room_3 room_4 room_5 room_6 room_7 room_8 room_9 - room
+    coin - item
+  )
+  (:init
+    (at room_2)
+    (connected room_0 room_6)
+    (connected room_0 room_1)
+    (connected room_0 room_8)
+    (connected room_1 room_0)
+    (connected room_1 room_5)
+    (connected room_2 room_6)
+    (connected room_3 room_4)
+    (connected room_4 room_5)
+    (connected room_4 room_3)
+    (connected room_5 room_1)
+    (connected room_5 room_4)
+    (connected room_5 room_9)
+    (connected room_6 room_2)
+    (connected room_6 room_0)
+    (connected room_6 room_7)
+    (connected room_7 room_6)
+    (connected room_8 room_0)
+    (connected room_9 room_5)
+    (location coin room_4)
+  )
+  (:goal 
+    (taken coin)
+  )
+)
