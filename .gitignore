@@ -7,6 +7,7 @@ data/create_configs_new.ipynb
 data/create_configs.py
 .env
 .DS_Store
+VAL/
 FormalizerScaling/
 output/
 tmp_solver_gt_check/
