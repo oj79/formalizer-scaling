@@ -1,0 +1,19 @@
+I am preparing and serving sandwiches to children. Here are the actions I can do
+
+Make a sandwich
+Make a gluten-free sandwich
+Put a sandwich on a tray
+Move a tray from one place to another
+Serve a sandwich to a child
+Serve a gluten-free sandwich to a child
+
+I have the following restrictions on my actions:
+I can only make a sandwich if the required bread portion and content portion are both available in the kitchen.
+I can only make a gluten-free sandwich if the bread portion and content portion are both gluten-free and available in the kitchen.
+I can only use a sandwich object that does not already exist.
+Once I make a sandwich, the corresponding bread and content portions are no longer available in the kitchen.
+I can only put a sandwich on a tray if the sandwich is in the kitchen and the tray is in the kitchen.
+I can only serve a sandwich to a child if the tray holding the sandwich is at the same place where the child is waiting.
+I can only serve a regular sandwich to a child who is not allergic to gluten.
+I can only serve a gluten-free sandwich to a child who is allergic to gluten.
+I can move a tray from one place to another at any time.

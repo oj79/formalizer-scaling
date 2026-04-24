@@ -7,6 +7,7 @@ data/create_configs_new.ipynb
 data/create_configs.py
 .env
 .DS_Store
+.vscode
 VAL/
 FormalizerScaling/
 output/
@@ -39,3 +40,9 @@ src/planner_gen_notebooks/llm_planner_gen_qwen3_32b_kani.ipynb
 prompts/llm_planner_instruction_cc.txt
 prompts/only_pddl_instruction_cc.txt
 src/length_summary
+data/BlocksWorld/
+data/OpenStacks/
+data/Transport/
+data/Elevators/
+data/ChildSnack/
+data/Barman/

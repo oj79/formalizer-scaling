@@ -1,0 +1,39 @@
+PDDL problem file contains problem name, domain name, objects in this problem instance, init state of objects, and goal state of objects.
+Based on the natural language problem description, identify the relevant objects for this problem with their names and types.
+Represent the initial state with the appropriate predicates and object arguments. Represent the goal state with the appropriate predicates and object arguments.
+PDDL problem file has a definitive syntax that must be followed for any problem. An abstract example PDDL problem file is given below.
+
+<problem_file>
+(define
+	(problem problem_name)
+	(:domain domain_name)
+	(:objects
+		obj1 obj2 - type1
+		obj3, obj4 - type2
+	)
+	(:init (predicate1 obj1 obj3) (predicate2 obj2 obj3))
+	(:goal (and (predicate1 obj1 obj4) (predicate2 obj2 obj3)))
+)
+</problem_file>
+
+Notes for generating problem file:
+- obj1, obj2, ... are only representative and should be replaced with appropriate objects. There could be any number of objects with their types.
+- init state with predicate1 & predicate2 is only representative and should be replaced with appropriate predicates that define init state
+- goal state with predicate1 & predicate2 is only representative and should be replaced with appropriate predicates that define goal state
+- predicates with proper arguments could be combined to combine complex boolean expression to represent init and goal states 
+- The braces should be balanced for each section of the PDDL program
+- Use predicates with arguments of the right type as declared in domain file
+- All the objects that would be arguments of predicates in init and goal states should be declared in :objects
+
+
+Additional strict constraints for large instances (1-6 cocktails):
+- Output only one complete problem PDDL wrapped in <problem_file>...</problem_file>. Do not output any domain file.
+- Include every required problem object exactly once in :objects, and do not include undeclared or duplicate objects.
+- Use only predicates and action-relevant symbols that are valid for the provided domain PDDL.
+- In this Barman formulation, declare each object exactly once using only its most specific valid type from the domain; do not redeclare any object under a supertype such as beverage or container.
+- In :objects, declare the required shaker, hands, shots, ingredients, cocktails, dispensers, and levels exactly once using valid names and valid types from the problem description.
+- In :init, include the required ontable, clean, empty, used, handempty, shaker-empty-level, shaker-level, next, dispenses, cocktail-part1, and cocktail-part2 facts exactly as required by the problem description and domain formulation.
+- In :init, ensure each shot glass has the correct initial state: it should be on the table and empty, and it should be either clean or marked used with the correct ingredient as specified by the problem description, but not both unless the formulation explicitly requires it.
+- In :init, use only declared objects and valid predicates, and ensure the cocktail-part1 and cocktail-part2 facts follow the intended recipe assignment pattern from the problem description.
+- In :goal, use only declared objects and valid predicates, and avoid contradictory goals.
+- Ensure parentheses are balanced and PDDL syntax is valid.

@@ -1,0 +1,23 @@
+I am a robot barman preparing drinks. Here are the actions I can do
+
+Grasp a container
+Leave a container on the table
+Fill a shot glass from a dispenser
+Refill a shot glass
+Empty a shot glass
+Clean a shot glass
+Pour a shot into a clean shaker
+Pour a shot into a used shaker
+Empty the shaker
+Clean the shaker
+Shake the shaker to make a cocktail
+Pour from the shaker into a shot glass
+
+I have the following restrictions on my actions:
+I can only grasp a container if it is on the table and the chosen hand is empty.
+I can only hold one container in each hand at a time.
+I can only fill a shot glass if the shot glass is empty and in the correct state for the action.
+I can only pour ingredients into the shaker if the required shot glass is being held.
+I can only shake the shaker if the correct two ingredients for a cocktail are already in the shaker.
+I can only pour from the shaker into a shot glass if the shaker currently contains the desired beverage and the shot glass is clean and empty.
+Shot glasses and the shaker may need to be emptied or cleaned before they can be reused.

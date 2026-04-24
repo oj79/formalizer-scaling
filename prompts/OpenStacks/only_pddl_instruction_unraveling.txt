@@ -1,0 +1,117 @@
+PDDL problem file contains problem name, domain name, objects in this problem instance, init state of objects, and goal state of objects.
+Based on the natural language problem description, identify the relevant objects for this problem with their names and types.
+In a formal PDDL problem file, initial state have the appropriate predicates and object arguments.
+In a formal PDDL problem file, goal state also have the appropriate predicates and object arguments.
+PDDL problem file has a definitive syntax that must be followed for any problem. An abstract example PDDL problem file is given below.
+
+(define
+	(problem problem_name)
+	(:domain domain_name)
+	(:objects
+		obj1 obj2 - type1
+		obj3, obj4 - type2
+	)
+	(:init (predicate1 obj1 obj3) (predicate2 obj2 obj3))
+	(:goal (and (predicate1 obj1 obj4) (predicate2 obj2 obj3)))
+)
+
+You MUST generate a PYTHON SCRIPT that, upon execution, generates the PDDL problem file that matches the natural language problem description:
+<generator>
+the python script code...
+</generator>
+
+EXAMPLE executable generator style from another domain (generalized):
+
+<generator>
+def build_init_from_unraveling_rule(n):
+  blocks = [f"block{i}" for i in range(1, n + 1)]
+
+  # Odd and even stacks are TOP -> BOTTOM with increasing numbering
+  odd_stack = [b for i, b in enumerate(blocks, start=1) if i % 2 == 1]
+  even_stack = [b for i, b in enumerate(blocks, start=1) if i % 2 == 0]
+
+  init_facts = []
+
+  # Convert one stack (top->bottom) to on/on-table/clear facts
+  def emit_stack(stack):
+      if not stack:
+          return
+      for idx, block in enumerate(stack):
+          if idx == len(stack) - 1:
+              init_facts.append(f"(on-table {block})")
+          else:
+              under = stack[idx + 1]
+              init_facts.append(f"(on {block} {under})")
+          if idx == 0:
+              init_facts.append(f"(clear {block})")
+
+  emit_stack(odd_stack)
+  emit_stack(even_stack)
+
+  init_facts.append("(arm-empty)")
+  return blocks, init_facts
+
+
+def build_problem_pddl(problem_name, domain_name, blocks, init_facts, goal_facts):
+  lines = []
+  lines.append(f"(define (problem {problem_name})")
+  lines.append(f"  (:domain {domain_name})")
+  lines.append(f"  (:objects {' '.join(blocks)})")
+  lines.append("  (:init")
+  for fact in init_facts:
+      lines.append(f"    {fact}")
+  lines.append("  )")
+  lines.append("  (:goal (and")
+  for fact in goal_facts:
+      lines.append(f"    {fact}")
+  lines.append("  ))")
+  lines.append(")")
+  return "\n".join(lines) + "\n"
+
+
+def main():
+  # n should be inferred from the given NL problem description in the real task
+  n = 10
+  problem_name = "example_problem"
+  domain_name = "xxx"
+
+  blocks, init_facts = build_init_from_unraveling_rule(n)
+
+  # Goal extraction can be abstracted; replace with parsed goal facts from the given NL problem
+  goal_facts = [
+      "(on block1 block5)",
+      "(on block2 block1)",
+      "(on-table block4)"
+  ]
+
+  pddl_text = build_problem_pddl(problem_name, domain_name, blocks, init_facts, goal_facts)
+
+  with open("problem.pddl", "w", encoding="utf-8") as f:
+      f.write(pddl_text)
+
+
+if __name__ == "__main__":
+  main()
+</generator>
+
+
+Notes for generating the python script:
+- The Python script is ONLY TRANSLATING the natural language problem description to the formal PDDL problem file.
+- The Python script is ABSOLUTELY NOT SOLVING the Openstacks problem
+
+
+Additional strict constraints for all instances (5-30 orders):
+- Output only one complete Python script wrapped in <generator>...</generator>. Do not output any domain file.
+- The script MUST derive init/goal facts algorithmically from compact structure, not hardcoded full fact lists.
+- Disallowed: manually listing full init_state/goal_state facts as constants.
+- Required: at least one loop that constructs predicates (e.g., waiting/includes/next-count) from parsed patterns.
+- Required: compute the count-object list from the inferred maximum count needed by the instance (do not hardcode all object names manually).
+- For this OpenStacks formulation, the count objects and the next-count chain must run from n0 up to nM where M = max(number of orders, number of products), not just the number of orders.
+- The Python script, upon execution, need to produce a complete PDDL problem file that includes every required count object exactly once in :objects, and uses only order and product symbols that are valid for the generated domain file.
+- The Python script, upon execution, need to produce a complete PDDL problem file that uses only predicates and action-relevant symbols that are valid for the provided domain PDDL.
+- The Python script, upon execution, need to produce a complete PDDL problem file that in :init, includes a valid next-count chain over the declared count objects, with no missing links or invalid count references.
+- The Python script, upon execution, need to produce a complete PDDL problem file that in :init, includes exactly one initial stacks-avail fact, and that fact must use a declared count object.
+- The Python script, upon execution, need to produce a complete PDDL problem file that in :init, includes exactly one waiting fact for each order described in the natural language problem description, and does not include undeclared orders.
+- The Python script, upon execution, need to produce a complete PDDL problem file that in :init, derives the includes facts algorithmically from the compact order-product pattern in the natural language problem description, and uses only valid order/product symbols from the generated domain file.
+- The Python script, upon execution, need to produce a complete PDDL problem file that in :goal, includes exactly the shipped facts required by the natural language problem description, uses only valid order symbols, and avoids contradictory goals.
+- The Python script, upon execution, need to produce a complete PDDL problem file that ensures parentheses are balanced and PDDL syntax is valid.
