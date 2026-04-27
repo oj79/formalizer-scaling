@@ -37,3 +37,4 @@ Additional strict constraints for large instances (5-30 customer orders):
 - In :init, include every required includes relation between orders and products exactly as specified by the problem description, using only declared objects and valid predicates.
 - In :goal, include the required shipped facts for all and only the intended orders, using only declared objects and valid predicates, and avoid contradictory goals.
 - Ensure parentheses are balanced and PDDL syntax is valid.
+

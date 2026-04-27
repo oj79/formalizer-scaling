@@ -115,3 +115,13 @@ Additional strict constraints for all instances (5-30 orders):
 - The Python script, upon execution, need to produce a complete PDDL problem file that in :init, derives the includes facts algorithmically from the compact order-product pattern in the natural language problem description, and uses only valid order/product symbols from the generated domain file.
 - The Python script, upon execution, need to produce a complete PDDL problem file that in :goal, includes exactly the shipped facts required by the natural language problem description, uses only valid order symbols, and avoids contradictory goals.
 - The Python script, upon execution, need to produce a complete PDDL problem file that ensures parentheses are balanced and PDDL syntax is valid.
+
+
+HIGHLY IMPORTANT additional requirements for all instances (5-30 customer orders):
+- In this OpenStacks formulation, only the count objects n0 ... nM belong in :objects. Do not declare order symbols (such as o1, o2, ...) or product symbols (such as p1, p2, ...) in :objects.
+- Do not place order or product symbols in the same typed object list as the count objects. Only the n-symbols should appear before "- count".
+- Do not assign order symbols or product symbols the type count or any other type in :objects.
+- The next-count relation must be a simple forward chain only: (next-count n0 n1), (next-count n1 n2), ..., (next-count n{M-1} nM).
+- Do not add any wraparound, backward, or extra next-count fact. In particular, do not add a fact like (next-count nM n0).
+- Do not invent extra structural facts beyond those implied by the problem description and the required OpenStacks chain/count structure.
+
