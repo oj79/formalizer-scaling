@@ -23,28 +23,41 @@ OUTPUT_ROOT = (
 )
 
 
+def _compact_symbol_text(s: str) -> str:
+    return re.sub(r"[\s_-]+", "", s.strip().lower())
+
+
 def _norm_space(s: str) -> str:
     return re.sub(r"\s+", " ", s.strip())
 
 
 def _canon_symbol(sym: str) -> str:
-    s = sym.strip().lower()
+    s = _compact_symbol_text(sym)
 
-    m = re.fullmatch(r"(?:loc|location)-?(\d+)", s)
+    m = re.fullmatch(r"(?:loc|location)(\d+)", s)
     if m:
         return f"location-{m.group(1)}"
 
-    m = re.fullmatch(r"(?:truck|vehicle|v)-?(\d+)", s)
+    m = re.fullmatch(r"(?:truck|vehicle|v)(\d+)", s)
     if m:
         return f"truck-{m.group(1)}"
 
-    m = re.fullmatch(r"(?:package|pkg|p)-?(\d+)", s)
+    m = re.fullmatch(r"(?:package|pkg|p)(\d+)", s)
     if m:
         return f"package-{m.group(1)}"
 
-    m = re.fullmatch(r"(?:capacity|cap)-?(\d+)", s)
+    m = re.fullmatch(r"(?:capacity|cap)(\d+)", s)
     if m:
         return f"capacity-{m.group(1)}"
+
+    if s == "location":
+        return "location"
+    if s == "package":
+        return "package"
+    if s == "vehicle":
+        return "vehicle"
+    if s == "capacitynumber":
+        return "capacity-number"
 
     return s
 
@@ -99,29 +112,70 @@ def _extract_section_body(pddl_text: str, section_name: str) -> str:
 
 _PREDICATE_RE = re.compile(r"\((road|at|in|capacity|capacity-predecessor)\s+([^()]+?)\)")
 _ROAD_LENGTH_RE = re.compile(r"\(=\s*\(road-length\s+([^()\s]+)\s+([^()\s]+)\)\s+([^()\s]+)\)")
+_VALID_TRANSPORT_TYPES = {"location", "package", "vehicle", "capacity-number"}
+
+_TYPE_MARKER_RE = re.compile(
+    r"""
+    -\s*
+    (?P<type>
+        l\s*o\s*c\s*a\s*t\s*i\s*o\s*n
+        |
+        p\s*a\s*c\s*k\s*a\s*g\s*e
+        |
+        v\s*e\s*h\s*i\s*c\s*l\s*e
+        |
+        c\s*a\s*p\s*a\s*c\s*i\s*t\s*y\s*(?:-\s*|\s+)n\s*u\s*m\s*b\s*e\s*r
+    )
+    """,
+    flags=re.IGNORECASE | re.VERBOSE,
+)
+
+_LOCATION_NAME_RE = re.compile(r"(?i)(?:loc|l\s*o\s*c|location|l\s*o\s*c\s*a\s*t\s*i\s*o\s*n)\s*[-_\s]?\s*(\d+)")
+_PACKAGE_NAME_RE = re.compile(r"(?i)(?:pkg|p\s*k\s*g|package|p\s*a\s*c\s*k\s*a\s*g\s*e|p)\s*[-_\s]?\s*(\d+)")
+_VEHICLE_NAME_RE = re.compile(r"(?i)(?:truck|t\s*r\s*u\s*c\s*k|vehicle|v\s*e\s*h\s*i\s*c\s*l\s*e|v)\s*[-_\s]?\s*(\d+)")
+_CAPACITY_NAME_RE = re.compile(r"(?i)(?:cap|c\s*a\s*p|capacity|c\s*a\s*p\s*a\s*c\s*i\s*t\s*y)\s*[-_\s]?\s*(\d+)")
+
+_NAME_PATTERNS_BY_TYPE = {
+    "location": _LOCATION_NAME_RE,
+    "package": _PACKAGE_NAME_RE,
+    "vehicle": _VEHICLE_NAME_RE,
+    "capacity-number": _CAPACITY_NAME_RE,
+}
+
+
+def _extract_object_names_for_type(names_text: str, obj_type: str) -> list[str]:
+    pattern = _NAME_PATTERNS_BY_TYPE[obj_type]
+    names = []
+    for m in pattern.finditer(names_text):
+        names.append(_canon_symbol(m.group(0)))
+    return names
 
 
 def _parse_typed_objects(objects_text: str):
-    tokens = objects_text.replace("\n", " ").split()
+    matches = list(_TYPE_MARKER_RE.finditer(objects_text))
+    if not matches:
+        raise ValueError("Malformed :objects section.")
+
     object_decls = []
-    pending_names = []
-    i = 0
+    cursor = 0
 
-    while i < len(tokens):
-        tok = tokens[i]
-        if tok == "-":
-            if not pending_names or i + 1 >= len(tokens):
-                raise ValueError("Malformed :objects section.")
-            obj_type = tokens[i + 1].strip().lower()
-            for name in pending_names:
-                object_decls.append((_canon_symbol(name), obj_type))
-            pending_names = []
-            i += 2
-        else:
-            pending_names.append(tok.strip())
-            i += 1
+    for m in matches:
+        names_text = objects_text[cursor:m.start()]
+        obj_type = _canon_symbol(m.group("type"))
+        if obj_type not in _VALID_TRANSPORT_TYPES:
+            raise ValueError("Malformed :objects section.")
 
-    if pending_names:
+        names = _extract_object_names_for_type(names_text, obj_type)
+        if not names:
+            raise ValueError("Malformed :objects section.")
+
+        for name in names:
+            object_decls.append((name, obj_type))
+
+        cursor = m.end()
+
+    trailing = objects_text[cursor:].strip()
+    if trailing:
         raise ValueError("Malformed :objects section: trailing names without type.")
 
     return object_decls
@@ -251,14 +305,14 @@ def main() -> None:
         if diff["perfect_match"]:
             counts["perfect_match"] += 1
 
-    total = counts["processed"]
+    total = len(problem_ids)
     print()
     print("Transport Qwen2.5/Kani parser summary")
     print(f"- requested problems: {len(problem_ids)}")
     print(f"- processed problems: {counts['processed']}")
     print(f"- skipped problems:   {counts['skipped']}")
     print()
-    print("Percent of processed problems with each mismatch type:")
+    print("Percent of requested problems with each mismatch type:")
     print(f"- missing objects: {pct(counts['objects_missing'], total)}%")
     print(f"- extra objects:   {pct(counts['objects_extra'], total)}%")
     print(f"- missing init:    {pct(counts['init_missing'], total)}%")
