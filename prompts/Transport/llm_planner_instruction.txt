@@ -13,9 +13,9 @@ Planning output requirements:
 
 Example format (replace names with the task-specific details):
 <plan>
-(pick-up block1 hand)
-(stack block1 block2)
-(move robot room1 room2)
+(pick-up truck-1 location-1 package-1 capacity-3 capacity-4)
+(drive truck-1 location-1 location-2)
+(drop truck-1 location-2 package-1 capacity-3 capacity-4)
 </plan>
 
 Follow this template for every problem. EOF
