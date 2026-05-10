@@ -13,9 +13,10 @@ Planning output requirements:
 
 Example format (replace names with the task-specific details):
 <plan>
-(pick-up block1 hand)
-(stack block1 block2)
-(move robot room1 room2)
+(make_sandwich_no_gluten sandw1 bread1 content1)
+(put_on_tray sandw1 tray1)
+(move_tray tray1 kitchen table1)
+(serve_sandwich_no_gluten sandw1 child1 tray1 table1)
 </plan>
 
 Follow this template for every problem. EOF
