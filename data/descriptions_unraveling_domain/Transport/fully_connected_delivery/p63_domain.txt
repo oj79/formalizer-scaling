@@ -1,0 +1,16 @@
+I am moving packages between locations using vehicles. Here are the actions I can do
+
+Drive a vehicle from one location to another
+Pick up a package with a vehicle
+Drop a package from a vehicle at a location
+
+I have the following restrictions on my actions:
+I can only drive a vehicle from one location to another if there is a road connecting the two locations.
+I can only pick up a package if the vehicle and the package are at the same location.
+I can only pick up a package if the vehicle has enough remaining carrying capacity.
+Once I pick up a package, the package is inside the vehicle and is no longer at the location.
+I can only drop a package if the package is currently inside the vehicle.
+I can only drop a package at the location where the vehicle currently is.
+Once I drop a package, the package is at that location and is no longer inside the vehicle.
+Driving a vehicle has a cost that depends on the road length.
+Picking up and dropping a package each have a cost of 1.
