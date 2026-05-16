@@ -164,6 +164,15 @@ def main() -> None:
     missing_goal_n = 0
     extra_goal_n = 0
     perfect_n = 0
+    category_problem_ids = {
+        "missing_objects": [],
+        "extra_objects": [],
+        "missing_init": [],
+        "extra_init": [],
+        "missing_goal": [],
+        "extra_goal": [],
+        "perfect_match": [],
+    }
 
     processed = 0
     failed_reads: list[tuple[str, str]] = []
@@ -189,27 +198,40 @@ def main() -> None:
         processed += 1
         if diff["objects_missing_in_llm"]:
             missing_objects_n += 1
+            category_problem_ids["missing_objects"].append(pid)
         if diff["objects_extra_in_llm"]:
             extra_objects_n += 1
+            category_problem_ids["extra_objects"].append(pid)
         if diff["init_missing_in_llm"]:
             missing_init_n += 1
+            category_problem_ids["missing_init"].append(pid)
         if diff["init_extra_in_llm"]:
             extra_init_n += 1
+            category_problem_ids["extra_init"].append(pid)
         if diff["goal_missing_in_llm"]:
             missing_goal_n += 1
+            category_problem_ids["missing_goal"].append(pid)
         if diff["goal_extra_in_llm"]:
             extra_goal_n += 1
+            category_problem_ids["extra_goal"].append(pid)
         if diff["perfect_match"]:
             perfect_n += 1
+            category_problem_ids["perfect_match"].append(pid)
+
+    def problem_suffix(category: str) -> str:
+        pids = category_problem_ids[category]
+        if not pids:
+            return ""
+        return f" (problems: {', '.join(pids)})"
 
     print("\nParser Summary (independent percentages; can sum > 100%):")
-    print(f"- missing objects: {pct(missing_objects_n, processed)}% ({missing_objects_n}/{processed})")
-    print(f"- extra objects:   {pct(extra_objects_n, processed)}% ({extra_objects_n}/{processed})")
-    print(f"- missing init:    {pct(missing_init_n, processed)}% ({missing_init_n}/{processed})")
-    print(f"- extra init:      {pct(extra_init_n, processed)}% ({extra_init_n}/{processed})")
-    print(f"- missing goal: {pct(missing_goal_n, processed)}% ({missing_goal_n}/{processed})")
-    print(f"- extra goal:   {pct(extra_goal_n, processed)}% ({extra_goal_n}/{processed})")
-    print(f"- perfect match:{pct(perfect_n, processed)}% ({perfect_n}/{processed})")
+    print(f"- missing objects: {pct(missing_objects_n, processed)}% ({missing_objects_n}/{processed}){problem_suffix('missing_objects')}")
+    print(f"- extra objects:   {pct(extra_objects_n, processed)}% ({extra_objects_n}/{processed}){problem_suffix('extra_objects')}")
+    print(f"- missing init:    {pct(missing_init_n, processed)}% ({missing_init_n}/{processed}){problem_suffix('missing_init')}")
+    print(f"- extra init:      {pct(extra_init_n, processed)}% ({extra_init_n}/{processed}){problem_suffix('extra_init')}")
+    print(f"- missing goal: {pct(missing_goal_n, processed)}% ({missing_goal_n}/{processed}){problem_suffix('missing_goal')}")
+    print(f"- extra goal:   {pct(extra_goal_n, processed)}% ({extra_goal_n}/{processed}){problem_suffix('extra_goal')}")
+    print(f"- perfect match:{pct(perfect_n, processed)}% ({perfect_n}/{processed}){problem_suffix('perfect_match')}")
 
     print(f"\nProcessed successfully: {processed}/{total}")
     if failed_reads:
