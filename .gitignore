@@ -37,6 +37,7 @@ src/planner_gen_notebooks/llm_planner_gen_gemini_cc.ipynb
 src/planner_gen_notebooks/llm_planner_gen_qwen2_5_32b_instruct_kani_cc.ipynb
 src/planner_gen_notebooks/llm_planner_gen_qwen2_5_32b_instruct.ipynb
 src/planner_gen_notebooks/llm_planner_gen_qwen3_32b_kani.ipynb
+src/planner_gen_notebooks/llm_planner_gen_qwen3_32b.ipynb
 prompts/llm_planner_instruction_cc.txt
 prompts/only_pddl_instruction_cc.txt
 src/length_summary
