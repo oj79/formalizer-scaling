@@ -143,6 +143,26 @@ _NAME_PATTERNS_BY_TYPE = {
 }
 
 
+def _collapse_character_spaced_object_text(objects_text: str) -> str:
+    """Normalize object sections like `l o c a t i o n - 1` to `location-1`."""
+    replacements = [
+        (
+            r"c\s*a\s*p\s*a\s*c\s*i\s*t\s*y\s*(?:-\s*|\s+)n\s*u\s*m\s*b\s*e\s*r",
+            "capacity-number",
+        ),
+        (r"l\s*o\s*c\s*a\s*t\s*i\s*o\s*n", "location"),
+        (r"p\s*a\s*c\s*k\s*a\s*g\s*e", "package"),
+        (r"v\s*e\s*h\s*i\s*c\s*l\s*e", "vehicle"),
+        (r"t\s*r\s*u\s*c\s*k", "truck"),
+        (r"c\s*a\s*p\s*a\s*c\s*i\s*t\s*y", "capacity"),
+    ]
+    normalized = objects_text
+    for pattern, replacement in replacements:
+        normalized = re.sub(pattern, replacement, normalized, flags=re.IGNORECASE)
+    normalized = re.sub(r"(?<=\d)\s+(?=\d)", "", normalized)
+    return normalized
+
+
 def _extract_object_names_for_type(names_text: str, obj_type: str) -> list[str]:
     pattern = _NAME_PATTERNS_BY_TYPE[obj_type]
     names = []
@@ -152,6 +172,7 @@ def _extract_object_names_for_type(names_text: str, obj_type: str) -> list[str]:
 
 
 def _parse_typed_objects(objects_text: str):
+    objects_text = _collapse_character_spaced_object_text(objects_text)
     matches = list(_TYPE_MARKER_RE.finditer(objects_text))
     if not matches:
         raise ValueError("Malformed :objects section.")
@@ -267,6 +288,15 @@ def main() -> None:
         "processed": 0,
         "skipped": 0,
     }
+    category_problem_ids = {
+        "objects_missing": [],
+        "objects_extra": [],
+        "init_missing": [],
+        "init_extra": [],
+        "goal_missing": [],
+        "goal_extra": [],
+        "perfect_match": [],
+    }
 
     for pid in tqdm(problem_ids, desc="Parsing", unit="problem"):
         gt_path = PDDL_DIR / f"{pid}_problem.pddl"
@@ -292,20 +322,34 @@ def main() -> None:
         counts["processed"] += 1
         if diff["objects_missing_in_llm"]:
             counts["objects_missing"] += 1
+            category_problem_ids["objects_missing"].append(pid)
         if diff["objects_extra_in_llm"]:
             counts["objects_extra"] += 1
+            category_problem_ids["objects_extra"].append(pid)
         if diff["init_missing_in_llm"]:
             counts["init_missing"] += 1
+            category_problem_ids["init_missing"].append(pid)
         if diff["init_extra_in_llm"]:
             counts["init_extra"] += 1
+            category_problem_ids["init_extra"].append(pid)
         if diff["goal_missing_in_llm"]:
             counts["goal_missing"] += 1
+            category_problem_ids["goal_missing"].append(pid)
         if diff["goal_extra_in_llm"]:
             counts["goal_extra"] += 1
+            category_problem_ids["goal_extra"].append(pid)
         if diff["perfect_match"]:
             counts["perfect_match"] += 1
+            category_problem_ids["perfect_match"].append(pid)
 
     total = len(problem_ids)
+
+    def problem_suffix(category: str) -> str:
+        pids = category_problem_ids[category]
+        if not pids:
+            return ""
+        return f" (problems: {', '.join(pids)})"
+
     print()
     print("Transport Qwen2.5/Kani parser summary")
     print(f"- requested problems: {len(problem_ids)}")
@@ -313,13 +357,13 @@ def main() -> None:
     print(f"- skipped problems:   {counts['skipped']}")
     print()
     print("Percent of requested problems with each mismatch type:")
-    print(f"- missing objects: {pct(counts['objects_missing'], total)}%")
-    print(f"- extra objects:   {pct(counts['objects_extra'], total)}%")
-    print(f"- missing init:    {pct(counts['init_missing'], total)}%")
-    print(f"- extra init:      {pct(counts['init_extra'], total)}%")
-    print(f"- missing goal:    {pct(counts['goal_missing'], total)}%")
-    print(f"- extra goal:      {pct(counts['goal_extra'], total)}%")
-    print(f"- perfect match:   {pct(counts['perfect_match'], total)}%")
+    print(f"- missing objects: {pct(counts['objects_missing'], total)}%{problem_suffix('objects_missing')}")
+    print(f"- extra objects:   {pct(counts['objects_extra'], total)}%{problem_suffix('objects_extra')}")
+    print(f"- missing init:    {pct(counts['init_missing'], total)}%{problem_suffix('init_missing')}")
+    print(f"- extra init:      {pct(counts['init_extra'], total)}%{problem_suffix('init_extra')}")
+    print(f"- missing goal:    {pct(counts['goal_missing'], total)}%{problem_suffix('goal_missing')}")
+    print(f"- extra goal:      {pct(counts['goal_extra'], total)}%{problem_suffix('goal_extra')}")
+    print(f"- perfect match:   {pct(counts['perfect_match'], total)}%{problem_suffix('perfect_match')}")
 
 
 if __name__ == "__main__":
