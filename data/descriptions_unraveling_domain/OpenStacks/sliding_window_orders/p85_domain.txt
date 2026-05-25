@@ -1,0 +1,18 @@
+I am managing a factory that produces products to fulfill customer orders. Here are the actions I can do
+
+Open a new stack
+Start an order
+Make a product
+Ship an order
+
+I have the following restrictions on my actions:
+I can only start an order if that order is still waiting to be started.
+I can only start an order if there is at least one available stack.
+Once I start an order, that order becomes active and uses one available stack.
+I can only make a product if that product has not already been made.
+I can only make a product if every active order that requires that product has already been started.
+Once I make a product, that product is available for all orders that require it.
+I can only ship an order if that order has already been started.
+I can only ship an order if all products required by that order have already been made.
+Once I ship an order, that order is completed and its stack becomes available again.
+Opening a new stack increases the total cost by 1.
