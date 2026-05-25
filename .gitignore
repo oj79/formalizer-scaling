@@ -15,6 +15,7 @@ tmp_solver_gt_check/
 data/create_configs_copy.py
 coin_collector_graph/
 coin_collector_graph2/
+cc_data/
 cc_data/create_domain_descriptions.py
 cc_data/create_domain_descriptions_copy.py
 cc_data/create_json.py
