@@ -29,6 +29,10 @@ data/create_configs_unraveling.py
 data/problem_file_line_parse.py
 data/block_configs_unraveling/
 data/num_stacks_unraveling/
+prompts/Barman
+prompts/Elevators
+prompts/CoinCollector
+
 __pycache__/
 *.pyc
 src/pddl_gen_notebooks/Barman
@@ -36,7 +40,6 @@ src/pddl_gen_notebooks/Elevators
 src/pddl_gen_notebooks/CoinCollector
 src/pddl_gen_scripts/Barman
 src/pddl_gen_scripts/Elevators
-
 src/pddl_gen_notebooks/problem_file_gen_deepseek_chat_v3_0324_openrouter.ipynb
 src/pddl_gen_notebooks/problem_file_gen_deepseek_r1_0528_openrouter.ipynb
 src/planner_gen_patchers
@@ -45,6 +48,8 @@ src/planner_gen_notebooks/llm_planner_gen_qwen2_5_32b_instruct_kani_cc.ipynb
 src/planner_gen_notebooks/llm_planner_gen_qwen2_5_32b_instruct.ipynb
 src/planner_gen_notebooks/llm_planner_gen_qwen3_32b_kani.ipynb
 src/planner_gen_notebooks/llm_planner_gen_qwen3_32b.ipynb
+src/planner_gen_scripts/llm_planner_gen_qwen3_32b_val.py
+src/planner_gen_scripts/llm_planner_gen_qwen3_32b.py
 prompts/llm_planner_instruction_cc.txt
 prompts/only_pddl_instruction_cc.txt
 src/length_summary
