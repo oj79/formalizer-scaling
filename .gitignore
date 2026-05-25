@@ -31,6 +31,10 @@ data/block_configs_unraveling/
 data/num_stacks_unraveling/
 __pycache__/
 *.pyc
+src/pddl_gen_notebooks/Barman
+src/pddl_gen_notebooks/Elevators
+src/pddl_gen_notebooks/CoinCollector
+
 src/pddl_gen_notebooks/problem_file_gen_deepseek_chat_v3_0324_openrouter.ipynb
 src/pddl_gen_notebooks/problem_file_gen_deepseek_r1_0528_openrouter.ipynb
 src/planner_gen_patchers
