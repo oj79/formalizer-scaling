@@ -1,3 +1,0 @@
-As initial conditions I have 1 cocktail numbered 1 to 1, 3 ingredients numbered 1 to 3, 6 shot glasses numbered 1 to 6, and 1 shaker. All ingredient dispensers are available from the start, and the shaker is clean and empty on the table. The two robot hands are both empty. Shot glass 5 and shot glass 6 are empty but dirty on the table, with shot glass 5 previously used for ingredient 2 and shot glass 6 previously used for ingredient 3. All other shot glasses are clean and empty on the table.
-The cocktail recipe is that cocktail 1 requires ingredients 2 and 3.
-My goal is to have that shot 1 contains cocktail 1.
