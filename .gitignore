@@ -34,6 +34,8 @@ __pycache__/
 src/pddl_gen_notebooks/Barman
 src/pddl_gen_notebooks/Elevators
 src/pddl_gen_notebooks/CoinCollector
+src/pddl_gen_scripts/Barman
+src/pddl_gen_scripts/Elevators
 
 src/pddl_gen_notebooks/problem_file_gen_deepseek_chat_v3_0324_openrouter.ipynb
 src/pddl_gen_notebooks/problem_file_gen_deepseek_r1_0528_openrouter.ipynb
