@@ -1,4 +1,4 @@
-# Language Model Planners do not Scale, but do Formalizers?
+# Language Models as Higher-Order Planning Formalizers
 
 Codebase for PDDL problem generation and LLM-as-planner, LLM-as-formalizer, and LLM-as-higher-order formalizeer experiments over BlocksWorld and three IPC-derived unraveling domains: OpenStacks, Transport, and ChildSnack.
 
