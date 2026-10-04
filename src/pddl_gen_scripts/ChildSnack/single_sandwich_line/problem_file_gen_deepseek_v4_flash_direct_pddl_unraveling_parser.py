@@ -274,16 +274,16 @@ def main() -> None:
 
     problem_ids = parse_problem_ids(args.start, args.end, args.ids)
 
-    counts = {
-        "objects_missing": 0,
-        "objects_extra": 0,
-        "init_missing": 0,
-        "init_extra": 0,
-        "goal_missing": 0,
-        "goal_extra": 0,
-        "perfect_match": 0,
-        "processed": 0,
-        "skipped": 0,
+    problem_ids_by_category = {
+        "objects_missing": [],
+        "objects_extra": [],
+        "init_missing": [],
+        "init_extra": [],
+        "goal_missing": [],
+        "goal_extra": [],
+        "perfect_match": [],
+        "processed": [],
+        "skipped": [],
     }
 
     print("PROJECT_ROOT:", PROJECT_ROOT)
@@ -299,7 +299,7 @@ def main() -> None:
         diff_txt_out = cand_dir / "gt_vs_llm_diff.txt"
 
         if not gt_path.exists() or not llm_path.exists():
-            counts["skipped"] += 1
+            problem_ids_by_category["skipped"].append(pid)
             missing = []
             if not gt_path.exists():
                 missing.append(f"GT missing: {gt_path}")
@@ -311,7 +311,7 @@ def main() -> None:
         try:
             diff = diff_fact_sections(gt_path.read_text(), llm_path.read_text())
         except Exception as e:
-            counts["skipped"] += 1
+            problem_ids_by_category["skipped"].append(pid)
             print(f"{pid}: skipped (parse error: {e})")
             continue
 
@@ -319,37 +319,51 @@ def main() -> None:
         diff_json_out.write_text(json.dumps(diff, indent=2))
         diff_txt_out.write_text(build_diff_report_text(pid, diff))
 
-        counts["processed"] += 1
+        problem_ids_by_category["processed"].append(pid)
         if diff["objects_missing_in_llm"]:
-            counts["objects_missing"] += 1
+            problem_ids_by_category["objects_missing"].append(pid)
         if diff["objects_extra_in_llm"]:
-            counts["objects_extra"] += 1
+            problem_ids_by_category["objects_extra"].append(pid)
         if diff["init_missing_in_llm"]:
-            counts["init_missing"] += 1
+            problem_ids_by_category["init_missing"].append(pid)
         if diff["init_extra_in_llm"]:
-            counts["init_extra"] += 1
+            problem_ids_by_category["init_extra"].append(pid)
         if diff["goal_missing_in_llm"]:
-            counts["goal_missing"] += 1
+            problem_ids_by_category["goal_missing"].append(pid)
         if diff["goal_extra_in_llm"]:
-            counts["goal_extra"] += 1
+            problem_ids_by_category["goal_extra"].append(pid)
         if diff["perfect_match"]:
-            counts["perfect_match"] += 1
+            problem_ids_by_category["perfect_match"].append(pid)
 
     total = len(problem_ids)
+
+    def ids_text(ids: list[str]) -> str:
+        return ", ".join(ids) if ids else "none"
+
+    def summary_line(label: str, key: str) -> str:
+        ids = problem_ids_by_category[key]
+        return f"- {label}: {pct(len(ids), total)}% ({len(ids)}/{total}) {ids_text(ids)}"
+
     print()
     print("ChildSnack DeepSeek-V4-Flash direct-PDDL parser summary")
     print(f"- requested problems: {total}")
-    print(f"- processed problems: {counts['processed']}")
-    print(f"- skipped problems:   {counts['skipped']}")
+    print(
+        f"- processed problems: {len(problem_ids_by_category['processed'])} "
+        f"{ids_text(problem_ids_by_category['processed'])}"
+    )
+    print(
+        f"- skipped problems:   {len(problem_ids_by_category['skipped'])} "
+        f"{ids_text(problem_ids_by_category['skipped'])}"
+    )
     print()
     print("Percent of requested problems with each mismatch type:")
-    print(f"- missing objects: {pct(counts['objects_missing'], total)}%")
-    print(f"- extra objects:   {pct(counts['objects_extra'], total)}%")
-    print(f"- missing init:    {pct(counts['init_missing'], total)}%")
-    print(f"- extra init:      {pct(counts['init_extra'], total)}%")
-    print(f"- missing goal:    {pct(counts['goal_missing'], total)}%")
-    print(f"- extra goal:      {pct(counts['goal_extra'], total)}%")
-    print(f"- perfect match:   {pct(counts['perfect_match'], total)}%")
+    print(summary_line("missing objects", "objects_missing"))
+    print(summary_line("extra objects  ", "objects_extra"))
+    print(summary_line("missing init   ", "init_missing"))
+    print(summary_line("extra init     ", "init_extra"))
+    print(summary_line("missing goal   ", "goal_missing"))
+    print(summary_line("extra goal     ", "goal_extra"))
+    print(summary_line("perfect match  ", "perfect_match"))
 
 
 if __name__ == "__main__":

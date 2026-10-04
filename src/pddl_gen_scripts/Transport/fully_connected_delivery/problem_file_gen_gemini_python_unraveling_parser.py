@@ -29,17 +29,17 @@ def _norm_space(s: str) -> str:
 
 def _canon_symbol(sym: str) -> str:
     s = sym.strip().lower()
-    if re.fullmatch(r"loc(?:ation)?-?(\d+)", s):
-        n = re.fullmatch(r"loc(?:ation)?-?(\d+)", s).group(1)
+    if re.fullmatch(r"(?:loc(?:ation)?|city[_-]?loc)[-_]?(\d+)", s):
+        n = re.fullmatch(r"(?:loc(?:ation)?|city[_-]?loc)[-_]?(\d+)", s).group(1)
         return f"location-{n}"
-    if re.fullmatch(r"(?:truck|vehicle|v)-?(\d+)", s):
-        n = re.fullmatch(r"(?:truck|vehicle|v)-?(\d+)", s).group(1)
+    if re.fullmatch(r"(?:truck|vehicle|v)[-_]?(\d+)", s):
+        n = re.fullmatch(r"(?:truck|vehicle|v)[-_]?(\d+)", s).group(1)
         return f"truck-{n}"
-    if re.fullmatch(r"(?:package|pkg|p)-?(\d+)", s):
-        n = re.fullmatch(r"(?:package|pkg|p)-?(\d+)", s).group(1)
+    if re.fullmatch(r"(?:package|pkg|p)[-_]?(\d+)", s):
+        n = re.fullmatch(r"(?:package|pkg|p)[-_]?(\d+)", s).group(1)
         return f"package-{n}"
-    if re.fullmatch(r"(?:capacity|cap)-?(\d+)", s):
-        n = re.fullmatch(r"(?:capacity|cap)-?(\d+)", s).group(1)
+    if re.fullmatch(r"(?:capacity|cap)[-_]?(\d+)", s):
+        n = re.fullmatch(r"(?:capacity|cap)[-_]?(\d+)", s).group(1)
         return f"capacity-{n}"
     return s
 
@@ -171,15 +171,17 @@ def main() -> None:
     problem_ids = parse_problem_ids(args.start, args.end, args.ids)
     total = len(problem_ids)
 
-    missing_objects_n = 0
-    extra_objects_n = 0
-    missing_init_n = 0
-    extra_init_n = 0
-    missing_goal_n = 0
-    extra_goal_n = 0
-    perfect_n = 0
-
-    processed = 0
+    problem_ids_by_category = {
+        "objects_missing": [],
+        "objects_extra": [],
+        "init_missing": [],
+        "init_extra": [],
+        "goal_missing": [],
+        "goal_extra": [],
+        "perfect_match": [],
+        "processed": [],
+        "skipped": [],
+    }
     failed_reads: list[tuple[str, str]] = []
 
     print("PROJECT_ROOT:", PROJECT_ROOT)
@@ -197,37 +199,59 @@ def main() -> None:
             llm_text = llm_path.read_text()
             diff = diff_fact_sections(gt_text, llm_text)
         except Exception as e:
+            problem_ids_by_category["skipped"].append(pid)
             failed_reads.append((pid, str(e)))
             continue
 
-        processed += 1
+        problem_ids_by_category["processed"].append(pid)
         if diff["objects_missing_in_llm"]:
-            missing_objects_n += 1
+            problem_ids_by_category["objects_missing"].append(pid)
         if diff["objects_extra_in_llm"]:
-            extra_objects_n += 1
+            problem_ids_by_category["objects_extra"].append(pid)
         if diff["init_missing_in_llm"]:
-            missing_init_n += 1
+            problem_ids_by_category["init_missing"].append(pid)
         if diff["init_extra_in_llm"]:
-            extra_init_n += 1
+            problem_ids_by_category["init_extra"].append(pid)
         if diff["goal_missing_in_llm"]:
-            missing_goal_n += 1
+            problem_ids_by_category["goal_missing"].append(pid)
         if diff["goal_extra_in_llm"]:
-            extra_goal_n += 1
+            problem_ids_by_category["goal_extra"].append(pid)
         if diff["perfect_match"]:
-            perfect_n += 1
+            problem_ids_by_category["perfect_match"].append(pid)
 
-    print("\nParser Summary (independent percentages; can sum > 100%):")
-    print(f"- missing objects: {pct(missing_objects_n, processed)}% ({missing_objects_n}/{processed})")
-    print(f"- extra objects:   {pct(extra_objects_n, processed)}% ({extra_objects_n}/{processed})")
-    print(f"- missing init:    {pct(missing_init_n, processed)}% ({missing_init_n}/{processed})")
-    print(f"- extra init:      {pct(extra_init_n, processed)}% ({extra_init_n}/{processed})")
-    print(f"- missing goal: {pct(missing_goal_n, processed)}% ({missing_goal_n}/{processed})")
-    print(f"- extra goal:   {pct(extra_goal_n, processed)}% ({extra_goal_n}/{processed})")
-    print(f"- perfect match:{pct(perfect_n, processed)}% ({perfect_n}/{processed})")
+    def ids_text(ids: list[str]) -> str:
+        return ", ".join(ids) if ids else "none"
 
-    print(f"\nProcessed successfully: {processed}/{total}")
+    def summary_line(label: str, key: str) -> str:
+        ids = problem_ids_by_category[key]
+        return f"- {label}: {pct(len(ids), total)}% ({len(ids)}/{total}) {ids_text(ids)}"
+
+    print()
+    print("Transport Gemini Python-unraveling parser summary")
+    print(f"- requested problems: {len(problem_ids)}")
+    print(
+        f"- processed problems: {len(problem_ids_by_category['processed'])} "
+        f"{ids_text(problem_ids_by_category['processed'])}"
+    )
+    print(
+        f"- skipped problems:   {len(problem_ids_by_category['skipped'])} "
+        f"{ids_text(problem_ids_by_category['skipped'])}"
+    )
+    print()
+    print("Percent of requested problems with each mismatch type:")
+    print(summary_line("missing objects", "objects_missing"))
+    print(summary_line("extra objects  ", "objects_extra"))
+    print(summary_line("missing init   ", "init_missing"))
+    print(summary_line("extra init     ", "init_extra"))
+    print(summary_line("missing goal   ", "goal_missing"))
+    print(summary_line("extra goal     ", "goal_extra"))
+    print(summary_line("perfect match  ", "perfect_match"))
+
     if failed_reads:
-        print("Failed IDs (read/parse issues):", ", ".join(pid for pid, _ in failed_reads))
+        print()
+        print("Skipped problem details:")
+        for pid, error in failed_reads:
+            print(f"- {pid}: {error}")
 
 
 if __name__ == "__main__":

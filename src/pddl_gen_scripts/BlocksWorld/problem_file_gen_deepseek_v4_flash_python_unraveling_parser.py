@@ -109,11 +109,11 @@ def main() -> None:
     problem_ids = parse_problem_ids(args.start, args.end, args.ids)
 
     total = len(problem_ids)
-    missing_init_n = 0
-    extra_init_n = 0
-    missing_goal_n = 0
-    extra_goal_n = 0
-    perfect_n = 0
+    missing_init_ids = []
+    extra_init_ids = []
+    missing_goal_ids = []
+    extra_goal_ids = []
+    perfect_ids = []
 
     processed = 0
     failed_reads = []
@@ -139,25 +139,34 @@ def main() -> None:
         processed += 1
 
         if len(diff["init_missing_in_llm"]) > 0:
-            missing_init_n += 1
+            missing_init_ids.append(pid)
         if len(diff["init_extra_in_llm"]) > 0:
-            extra_init_n += 1
+            extra_init_ids.append(pid)
         if len(diff["goal_missing_in_llm"]) > 0:
-            missing_goal_n += 1
+            missing_goal_ids.append(pid)
         if len(diff["goal_extra_in_llm"]) > 0:
-            extra_goal_n += 1
+            extra_goal_ids.append(pid)
         if diff["perfect_match"]:
-            perfect_n += 1
+            perfect_ids.append(pid)
 
     # denominator is requested range size, so read/parse failures penalize summary
     denom = total if total > 0 else 1
 
+    def ids_text(problem_ids: list[str]) -> str:
+        return ", ".join(problem_ids) if problem_ids else "none"
+
+    def summary_line(label: str, problem_ids: list[str]) -> str:
+        return (
+            f"- {label}: {pct(len(problem_ids), denom)}% "
+            f"({len(problem_ids)}/{total}) {ids_text(problem_ids)}"
+        )
+
     print("\nParser Summary (independent percentages; can sum > 100%):")
-    print(f"- missing init: {pct(missing_init_n, denom)}% ({missing_init_n}/{total})")
-    print(f"- extra init:   {pct(extra_init_n, denom)}% ({extra_init_n}/{total})")
-    print(f"- missing goal: {pct(missing_goal_n, denom)}% ({missing_goal_n}/{total})")
-    print(f"- extra goal:   {pct(extra_goal_n, denom)}% ({extra_goal_n}/{total})")
-    print(f"- perfect match:{pct(perfect_n, denom)}% ({perfect_n}/{total})")
+    print(summary_line("missing init", missing_init_ids))
+    print(summary_line("extra init  ", extra_init_ids))
+    print(summary_line("missing goal", missing_goal_ids))
+    print(summary_line("extra goal  ", extra_goal_ids))
+    print(summary_line("perfect match", perfect_ids))
 
     print(f"\nProcessed successfully: {processed}/{total}")
     if failed_reads:
