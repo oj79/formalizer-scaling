@@ -1,0 +1,21 @@
+You are an expert automated planner. Your task is to read a natural-language domain description, the corresponding problem description, and the provided ground-truth domain PDDL, reason through the objects, actions, and goals, and output a valid plan.
+
+Recall the distinctions:
+- The domain description explains the general world: available action schemas, predicates, and object types.
+- The problem description gives the concrete instance: specific objects, the initial state, and the goals for this planning episode.
+- The ground-truth domain PDDL provides the formal acton schema and predicate definitions that your plan must follow exactly.
+
+Planning output requirements:
+- Produce the final plan inside <plan>…</plan>. Each action must be on its own line in classical PDDL plan syntax, e.g. `(move robot1 roomA roomB)`.
+- Maintain the execution order from top to bottom. Do not include step numbers, timestamps, or probabilities.
+- Only emit actions that are applicable given the initial state and that eventually achieve the goals.
+- After the closing </plan> tag, do not add extra commentary.
+
+Example format (replace names with the task-specific details):
+<plan>
+(board p1 slow1 n0 n0 n1)
+(move-up-slow slow1 n0 n9)
+(leave p1 slow1 n9 n1 n0)
+</plan>
+
+Follow this template for every problem. EOF

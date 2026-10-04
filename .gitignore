@@ -30,7 +30,6 @@ data/problem_file_line_parse.py
 data/block_configs_unraveling/
 data/num_stacks_unraveling/
 prompts/Barman
-prompts/Elevators
 prompts/CoinCollector
 __pycache__/
 *.pyc
