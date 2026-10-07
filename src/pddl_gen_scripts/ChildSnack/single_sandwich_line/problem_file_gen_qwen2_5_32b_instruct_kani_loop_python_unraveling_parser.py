@@ -19,7 +19,7 @@ OUTPUT_ROOT = (
     / "direct_pddl_unraveling"
     / "ChildSnack"
     / "single_sandwich_line"
-    / "qwen2_5_32b_instruct_kani_loop_unraveling"
+    / "updated_qwen2_5_32b_instruct_kani_loop_unraveling"
 )
 
 
