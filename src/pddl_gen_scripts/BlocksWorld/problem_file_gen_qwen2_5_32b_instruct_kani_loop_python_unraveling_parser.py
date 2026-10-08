@@ -15,7 +15,7 @@ except Exception:  # pragma: no cover
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 DATA_DIR = PROJECT_ROOT / "data"
 GT_PDDL_DIR = DATA_DIR / "pddl_unraveling"
-MODEL_OUTPUT_ROOT = PROJECT_ROOT / "output" / "direct_pddl_unraveling" / "BlocksWorld" / "qwen2_5_32b_instruct_kani_loop_unraveling"
+MODEL_OUTPUT_ROOT = PROJECT_ROOT / "output" / "direct_pddl_unraveling" / "BlocksWorld" / "updated_qwen2_5_32b_instruct_kani_loop_unraveling"
 
 
 _fact_line_re = re.compile(r"\(\s*([a-zA-Z\-]+)([^()]*)\)")

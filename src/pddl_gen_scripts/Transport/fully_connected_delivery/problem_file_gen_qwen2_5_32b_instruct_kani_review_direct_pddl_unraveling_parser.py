@@ -20,7 +20,7 @@ OUTPUT_ROOT = (
     / "direct_pddl_direct_unraveling"
     / "Transport"
     / "fully_connected_delivery"
-    / "qwen2_5_32b_instruct_kani_review_unraveling"
+    / "updated_qwen2_5_32b_instruct_kani_review_unraveling"
 )
 
 
