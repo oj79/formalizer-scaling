@@ -65,3 +65,4 @@ data/pddl_unraveling_domain/OpenStacks
 src/pddl_gen_notebooks/OpenStacks
 src/pddl_gen_scripts/OpenStacks
 src/planner_gen_notebooks/OpenStacks
+src/count_gemini_direct_pddl_unraveling_output_tokens.ipynb
