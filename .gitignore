@@ -64,3 +64,4 @@ data/descriptions_unraveling_domain/OpenStacks
 data/pddl_unraveling_domain/OpenStacks
 src/pddl_gen_notebooks/OpenStacks
 src/pddl_gen_scripts/OpenStacks
+src/planner_gen_notebooks/OpenStacks
