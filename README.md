@@ -1,6 +1,6 @@
 # Language Models as Higher-Order Planning Formalizers
 
-Codebase for PDDL problem generation and LLM-as-planner, LLM-as-formalizer, and LLM-as-higher-order formalizeer experiments over BlocksWorld and three IPC-derived unraveling domains: OpenStacks, Transport, and ChildSnack.
+Codebase for PDDL problem generation and LLM-as-planner, LLM-as-formalizer, and LLM-as-higher-order formalizeer experiments over BlocksWorld and three IPC-derived unraveling domains: Elevators, Transport, and ChildSnack.
 
 ## 1) Dependencies
 
@@ -65,12 +65,12 @@ data/
   pddl/                            # BlocksWorld standard ground-truth PDDL
   descriptions_unraveling/         # BlocksWorld unraveling natural-language descriptions
   pddl_unraveling/                 # BlocksWorld unraveling ground-truth PDDL
-  descriptions_unraveling_domain/  # OpenStacks, Transport, ChildSnack descriptions
-  pddl_unraveling_domain/          # OpenStacks, Transport, ChildSnack ground-truth PDDL
+  descriptions_unraveling_domain/  # Elevators, Transport, ChildSnack descriptions
+  pddl_unraveling_domain/          # Elevators, Transport, ChildSnack ground-truth PDDL
 
 prompts/
   BlocksWorld/
-  OpenStacks/
+  Elevators/
   Transport/
   ChildSnack/
 
@@ -86,7 +86,7 @@ Domain/template folders use these names:
 
 ```text
 BlocksWorld/
-OpenStacks/sliding_window_orders/
+Elevators/bottom_to_top_delivery/
 Transport/fully_connected_delivery/
 ChildSnack/single_sandwich_line/
 ```
@@ -133,12 +133,12 @@ python src/pddl_gen_scripts/BlocksWorld/problem_file_gen_gemini_parser.py --star
 python src/pddl_gen_scripts/BlocksWorld/problem_file_gen_deepseek_v4_flash_parser.py --start 1 --end 10
 ```
 
-### OpenStacks, Transport, and ChildSnack
+### Elevators, Transport, and ChildSnack
 
 For the IPC-derived unraveling domains, run PDDL generation from the notebooks:
 
 ```text
-src/pddl_gen_notebooks/OpenStacks/sliding_window_orders/
+src/pddl_gen_notebooks/Elevators/bottom_to_top_delivery/
 src/pddl_gen_notebooks/Transport/fully_connected_delivery/
 src/pddl_gen_notebooks/ChildSnack/single_sandwich_line/
 ```
@@ -148,7 +148,7 @@ These folders contain notebooks for Gemini, DeepSeek v4 Flash, and Qwen2.5 Kani 
 Examples:
 
 ```bash
-python src/pddl_gen_scripts/OpenStacks/sliding_window_orders/problem_file_gen_gemini_direct_pddl_unraveling_parser.py --start 1 --end 10
+python src/pddl_gen_scripts/Elevators/bottom_to_top_delivery/problem_file_gen_gemini_direct_pddl_unraveling_parser.py --start 1 --end 10
 ```
 
 ```bash
@@ -213,12 +213,12 @@ python src/planner_gen_scripts/BlocksWorld/llm_planner_gen_qwen2_5_32b_instruct_
 
 DeepSeek BlocksWorld planner workflows are available as notebooks.
 
-### OpenStacks, Transport, and ChildSnack
+### Elevators, Transport, and ChildSnack
 
 For the IPC-derived unraveling domains, run planner generation and validation directly in the notebooks:
 
 ```text
-src/planner_gen_notebooks/OpenStacks/sliding_window_orders/
+src/planner_gen_notebooks/Elevators/bottom_to_top_delivery/
 src/planner_gen_notebooks/Transport/fully_connected_delivery/
 src/planner_gen_notebooks/ChildSnack/single_sandwich_line/
 ```
@@ -255,6 +255,7 @@ Parser/checker scripts assume the corresponding model outputs already exist.
 
 ## 9) Notes
 
+- Generations should be run in the notebooks.
 - Run scripts from the repository root unless a notebook cell specifies otherwise.
 - Notebook paths assume the repository layout above.
 - Qwen2.5 Kani workflows require local model loading and adequate GPU memory.
