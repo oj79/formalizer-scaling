@@ -21,7 +21,7 @@ Notes for generating problem file header:
 
 Additional strict constraints for all instances (5-100 blocks):
 - Output only one complete problem PDDL header wrapped in <header>...</header>. Do not output any domain file.
-- Include every block mentioned in the problem description exactly once in :objects, and do not include undeclared objects.
+- Include every block mentioned in the problem description once in :objects, and do not include undeclared objects.
 - Only write for the header parts.
 - Do not write anything for :init.
 - Do not write anything for :goal.
