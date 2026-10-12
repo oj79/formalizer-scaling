@@ -106,7 +106,7 @@ Additional strict constraints for all instances (10-100 floors):
 - Disallowed: manually listing full init_state/goal_state facts as constants.
 - Required: use loops to construct repeated predicates and numeric assignments, including floor relations, elevator reachability, passenger locations, and travel costs, from computed patterns.
 - Required: compute object lists from the inferred floor count and the described passenger and elevator counts; do not hardcode complete object-name lists manually.
-- The Python script, upon execution, need to produce a complete PDDL problem file that includes every floor/count object, passenger, slow elevator, and fast elevator required by the problem description exactly once in :objects and does not use undeclared objects.
+- The Python script, upon execution, need to produce a complete PDDL problem file that includes every floor/count object, passenger, slow elevator, and fast elevator required by the problem description once in :objects and does not use undeclared objects.
 - The Python script, upon execution, need to produce a complete PDDL problem file that uses only predicates and action-relevant symbols that are valid for the provided domain PDDL.
 - Floors numbered 1 through F in the natural-language description must be represented consistently by the domain's count objects n0 through n(F-1). These same count objects also represent elevator occupancy levels required by the domain.
 - The Python script, upon execution, need to produce a complete PDDL problem file that in :init, places all 15 passengers and all three elevators on floor 1, represents every elevator as initially carrying zero passengers, and does not initially mark any passenger as boarded.

@@ -28,9 +28,9 @@ Notes for generating problem file:
 
 Additional strict constraints for large instances (10-100 floors):
 - Output only one complete problem PDDL wrapped in <problem_file>...</problem_file>. Do not output any domain file.
-- Include every required problem object exactly once in :objects, and do not include undeclared or duplicate objects.
+- Include every required problem object once in :objects, and do not include undeclared or duplicate objects.
 - Use only predicates and action-relevant symbols that are valid for the provided domain PDDL.
-- In this Elevators formulation, declare all floor/count objects, passengers, slow elevators, and fast elevators exactly once using valid names and valid types from the problem description.
+- In this Elevators formulation, declare all floor/count objects, passengers, slow elevators, and fast elevators once using valid names and valid types from the problem description.
 - Floors numbered 1 through F in the natural-language description must be represented consistently by the domain's count objects n0 through n(F-1). These same count objects also represent elevator occupancy levels required by the domain.
 - In :init, place all 15 passengers and all three elevators on floor 1, represent every elevator as initially carrying zero passengers, and do not initially mark any passenger as boarded.
 - In :init, include every required can-hold fact: slow1 and slow2 can hold occupancy levels n1 through n4, and fast1 can hold occupancy levels n1 through n6.
@@ -38,5 +38,5 @@ Additional strict constraints for large instances (10-100 floors):
 - In :init, explicitly include a reachable-floor fact for every combination of declared elevator and declared floor.
 - In :init, explicitly include one travel-slow and one travel-fast numeric assignment for every lower-floor/higher-floor pair. For floors separated by d levels, the slow cost must be d + 5 and the fast cost must be 3d + 1.
 - Initialize total-cost to 0 and include (:metric minimize (total-cost)).
-- In :goal, include exactly one passenger-at destination fact for each of the 15 passengers, matching the destination floor stated for that passenger and using only declared objects.
+- In :goal, include one passenger-at destination fact for each of the 15 passengers, matching the destination floor stated for that passenger and using only declared objects.
 - Ensure parentheses are balanced and PDDL syntax is valid.
