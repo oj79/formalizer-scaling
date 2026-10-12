@@ -106,13 +106,13 @@ Additional strict constraints for all instances (5-30 children):
 - Disallowed: manually listing full init_state/goal_state facts as constants.
 - Required: at least one loop that constructs predicates (e.g., waiting/at_kitchen_bread/served) from parsed patterns.
 - Required: compute object list from inferred child count and the fixed template counts for breads, contents, sandwiches, trays, and tables (do not hardcode all object names manually).
-- The Python script, upon execution, need to produce a complete PDDL problem file that includes every required child, bread-portion, content-portion, tray, table, and sandwich object exactly once in :objects and does not include undeclared problem objects.
+- The Python script, upon execution, need to produce a complete PDDL problem file that includes every required child, bread-portion, content-portion, tray, table, and sandwich object once in :objects and does not include undeclared problem objects.
 - The Python script, upon execution, need to produce a complete PDDL problem file that uses only predicates and object arguments that are valid for the provided ChildSnack domain PDDL.
-- The Python script, upon execution, need to produce a complete PDDL problem file that in :init, places every tray at exactly one valid place, with the kitchen referenced only as the domain constant kitchen and not redeclared in :objects.
-- The Python script, upon execution, need to produce a complete PDDL problem file that in :init, places every bread portion exactly once with at_kitchen_bread and every content portion exactly once with at_kitchen_content.
-- The Python script, upon execution, need to produce a complete PDDL problem file that in :init, marks each sandwich placeholder with notexist exactly once and does not also place that sandwich at the kitchen or on a tray initially.
-- The Python script, upon execution, need to produce a complete PDDL problem file that in :init, assigns each child exactly one gluten-status fact, either allergic_gluten or not_allergic_gluten, but not both.
+- The Python script, upon execution, need to produce a complete PDDL problem file that in :init, places every tray at one valid place, with the kitchen referenced only as the domain constant kitchen and not redeclared in :objects.
+- The Python script, upon execution, need to produce a complete PDDL problem file that in :init, places every bread portion once with at_kitchen_bread and every content portion once with at_kitchen_content.
+- The Python script, upon execution, need to produce a complete PDDL problem file that in :init, marks each sandwich placeholder with notexist once and does not also place that sandwich at the kitchen or on a tray initially.
+- The Python script, upon execution, need to produce a complete PDDL problem file that in :init, assigns each child one gluten-status fact, either allergic_gluten or not_allergic_gluten, but not both.
 - The Python script, upon execution, need to produce a complete PDDL problem file that in :init, assigns no_gluten_bread and no_gluten_content exactly to the portions required by the described template pattern, without adding those facts to regular portions.
-- The Python script, upon execution, need to produce a complete PDDL problem file that in :init, places every child in exactly one waiting fact at exactly one valid table according to the described tray-assignment pattern.
+- The Python script, upon execution, need to produce a complete PDDL problem file that in :init, places every child in one waiting fact at one valid table according to the described tray-assignment pattern.
 - The Python script, upon execution, need to produce a complete PDDL problem file that in :goal, includes exactly the served facts for all described children and avoids contradictory or undeclared goals.
 - The Python script, upon execution, need to produce a complete PDDL problem file that ensures parentheses are balanced and PDDL syntax is valid.

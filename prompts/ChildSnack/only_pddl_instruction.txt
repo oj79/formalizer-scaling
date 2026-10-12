@@ -28,12 +28,12 @@ Notes for generating problem file:
 
 Additional strict constraints for large instances (5-30 children):
 - Output only one complete problem PDDL wrapped in <problem_file>...</problem_file>. Do not output any domain file.
-- Include every required problem object exactly once in :objects, and do not include undeclared or duplicate objects.
+- Include every required problem object once in :objects, and do not include undeclared or duplicate objects.
 - Use only predicates and action-relevant symbols that are valid for the provided domain PDDL.
-- In this ChildSnack formulation, declare all required children, bread-portion objects, content-portion objects, sandwich objects, tray objects, and place objects exactly once using valid names and valid types from the problem description.
+- In this ChildSnack formulation, declare all required children, bread-portion objects, content-portion objects, sandwich objects, tray objects, and place objects once using valid names and valid types from the problem description.
 - Do not declare the kitchen as a problem object if it is already provided as a domain constant; use it only where valid predicates require it.
 - In :init, include the required at facts for trays, the required at_kitchen_bread facts for bread portions, the required at_kitchen_content facts for content portions, and the required notexist facts for sandwich objects using only declared objects and valid predicates.
-- In :init, assign each child exactly one valid gluten-status predicate, and include the required no_gluten_bread and no_gluten_content facts exactly for the intended gluten-free ingredients.
-- In :init, include exactly one valid waiting fact for each child at the intended place, using only declared objects and valid predicates.
+- In :init, assign each child one valid gluten-status predicate, and include the required no_gluten_bread and no_gluten_content facts for the intended gluten-free ingredients.
+- In :init, include one valid waiting fact for each child at the intended place, using only declared objects and valid predicates.
 - In :goal, include the required served facts for all and only the intended children, using only declared objects and valid predicates, and avoid contradictory goals.
 - Ensure parentheses are balanced and PDDL syntax is valid.
