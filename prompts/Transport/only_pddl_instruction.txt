@@ -28,12 +28,12 @@ Notes for generating problem file:
 
 Additional strict constraints for large instances (10-30 locations):
 - Output only one complete problem PDDL wrapped in <problem_file>...</problem_file>. Do not output any domain file.
-- Include every required problem object exactly once in :objects, and do not include undeclared or duplicate objects.
+- Include every required problem object once in :objects, and do not include undeclared or duplicate objects.
 - Use only predicates and action-relevant symbols that are valid for the provided domain PDDL.
-- In this Transport formulation, declare all locations, vehicles, packages, and capacity-number objects exactly once using valid names and valid types from the problem description.
+- In this Transport formulation, declare all locations, vehicles, packages, and capacity-number objects once using valid names and valid types from the problem description.
 - In :init, include the full capacity-predecessor chain using only declared capacity-number objects and valid predicates.
 - In :init, include the complete fully connected bidirectional road network between all distinct locations, and include the corresponding road-length facts exactly as required by the problem description.
-- In :init, place each vehicle at exactly one valid starting location and assign each vehicle the correct carrying capacity using only declared objects and valid predicates.
-- In :init, place each package at exactly one valid starting location, and do not place the same package at multiple locations or simultaneously inside a vehicle unless the problem description requires it.
+- In :init, place each vehicle at one valid starting location and assign each vehicle the correct carrying capacity using only declared objects and valid predicates.
+- In :init, place each package at one valid starting location, and do not place the same package at multiple locations or simultaneously inside a vehicle unless the problem description requires it.
 - In :goal, include the required package destination facts for all and only the intended packages, using only declared objects and valid predicates, and avoid contradictory goals.
 - Ensure parentheses are balanced and PDDL syntax is valid.
